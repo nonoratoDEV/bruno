@@ -35,7 +35,8 @@ const OAuth2AuthorizationCode = ({ save, item = {}, request, handleRun, updateAu
     tokenQueryKey,
     refreshTokenUrl,
     autoRefreshToken,
-    autoFetchToken
+    autoFetchToken,
+    includeScopeInTokenRequest
   } = oAuth;
 
   const refreshTokenUrlAvailable = refreshTokenUrl?.trim() !== '';
@@ -85,6 +86,7 @@ const OAuth2AuthorizationCode = ({ save, item = {}, request, handleRun, updateAu
           refreshTokenUrl,
           autoRefreshToken,
           autoFetchToken,
+          includeScopeInTokenRequest,
           [key]: value,
         }
       })
@@ -328,6 +330,25 @@ const OAuth2AuthorizationCode = ({ save, item = {}, request, handleRun, updateAu
             <IconHelp size={16} className="text-gray-500" />
             <span className="group-hover:opacity-100 pointer-events-none opacity-0 max-w-60 absolute left-0 bottom-full mb-1 w-max p-2 bg-gray-700 text-white text-xs rounded-md transition-opacity duration-200">
               Automatically refresh your token using the refresh URL when it expires.
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      {/* Include scope in token request */}
+      <div className="flex items-center gap-4 w-full">
+        <input
+          type="checkbox"
+          checked={Boolean(includeScopeInTokenRequest)}
+          onChange={(e) => handleChange('includeScopeInTokenRequest', e.target.checked)}
+          className="cursor-pointer ml-1"
+        />
+        <label className="block min-w-[140px]">Include scope in token request</label>
+        <div className="flex items-center gap-2">
+          <div className="relative group cursor-pointer">
+            <IconHelp size={16} className="text-gray-500" />
+            <span className="group-hover:opacity-100 pointer-events-none opacity-0 max-w-60 absolute left-0 bottom-full mb-1 w-max p-2 bg-gray-700 text-white text-xs rounded-md transition-opacity duration-200">
+              When checked, the scope will be included in the token request. According to the OAuth2 spec, servers shouldn't require this.
             </span>
           </div>
         </div>

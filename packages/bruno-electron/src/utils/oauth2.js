@@ -265,7 +265,9 @@ const getOAuth2TokenUsingAuthorizationCode = async ({ request, collectionUid, fo
   if (pkce) {
     data['code_verifier'] = codeVerifier;
   }
-  if (scope && scope.trim() !== '') {
+  // Only include scope in token request if includeScopeInTokenRequest is true
+  const includeScopeInTokenRequest = oAuth.includeScopeInTokenRequest;
+  if (includeScopeInTokenRequest && scope && scope.trim() !== '') {
     data.scope = scope;
   }
   axiosRequestConfig.data = qs.stringify(data);
